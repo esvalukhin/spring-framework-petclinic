@@ -68,7 +68,7 @@ public class ClinicServiceImpl implements ClinicService {
     @Override
     @Transactional(readOnly = true)
     public Collection<Owner> findOwnerByLastName(String lastName) {
-        return ownerRepository.findByLastName(lastName);
+        return ownerRepository.findByFirstName(lastName);
     }
 
     @Override
