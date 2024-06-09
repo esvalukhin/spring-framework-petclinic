@@ -21,7 +21,9 @@ import java.util.Map;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -130,6 +132,13 @@ public class OwnerController {
         ModelAndView mav = new ModelAndView("owners/ownerDetails");
         mav.addObject(this.clinicService.findOwnerById(ownerId));
         return mav;
+    }
+
+    @GetMapping("/owners/pets")
+    public String listPets(@RequestParam("name") String name, Map<String, Object> model) {
+        Collection<Pet> petsByOwnerName = clinicService.findPetsByOwnerName(name);
+        model.put("selections", petsByOwnerName);
+        return "pets/petList";
     }
 
 }
