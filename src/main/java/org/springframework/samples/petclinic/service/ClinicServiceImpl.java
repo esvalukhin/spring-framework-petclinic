@@ -30,6 +30,8 @@ import org.springframework.samples.petclinic.repository.VetRepository;
 import org.springframework.samples.petclinic.repository.VisitRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Mostly used as a facade for all Petclinic controllers
@@ -39,6 +41,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class ClinicServiceImpl implements ClinicService {
+
+    private static final Logger log = LoggerFactory.getLogger(ClinicServiceImpl.class);
 
     private PetRepository petRepository;
     private VetRepository vetRepository;
@@ -101,13 +105,16 @@ public class ClinicServiceImpl implements ClinicService {
     @Transactional(readOnly = true)
     @Cacheable(value = "vets")
     public Collection<Vet> findVets() {
-        return vetRepository.findAll();
+        log.debug("Starting to find all veterinarians");
+        Collection<Vet> vets = vetRepository.findAll();
+        log.debug("Finished finding all veterinarians");
+        return vets;
     }
 
-	@Override
-	public Collection<Visit> findVisitsByPetId(int petId) {
-		return visitRepository.findByPetId(petId);
-	}
+    @Override
+    public Collection<Visit> findVisitsByPetId(int petId) {
+        return visitRepository.findByPetId(petId);
+    }
 
 
 }
