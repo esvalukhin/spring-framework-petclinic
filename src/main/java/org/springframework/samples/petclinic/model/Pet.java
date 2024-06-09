@@ -99,7 +99,7 @@ public class Pet extends NamedEntity {
 
     public List<Visit> getVisits() {
         List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
-        PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
+        PropertyComparator.sort(sortedVisits, new MutableSortDefinition("description", false, false));
         return Collections.unmodifiableList(sortedVisits);
     }
 
