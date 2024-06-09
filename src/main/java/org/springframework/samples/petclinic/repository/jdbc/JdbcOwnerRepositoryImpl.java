@@ -139,7 +139,7 @@ public class JdbcOwnerRepositoryImpl implements OwnerRepository {
     }
 
     public Collection<PetType> getPetTypes() {
-        return this.jdbcClient.sql("SELECT id, name FROM types ORDER BY name")
+        return this.jdbcClient.sql("SELECT id, name || id FROM types ORDER BY name")
             .query(BeanPropertyRowMapper.newInstance(PetType.class))
             .list();
     }
