@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 import jakarta.validation.Valid;
@@ -80,7 +81,7 @@ public class VisitController {
         if (result.hasErrors()) {
             return "pets/createOrUpdateVisitForm";
         }
-
+        visit.setDate(LocalDate.now());
         this.clinicService.saveVisit(visit);
         return "redirect:/owners/{ownerId}";
     }
