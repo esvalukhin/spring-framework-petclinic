@@ -135,6 +135,7 @@ public class JdbcOwnerRepositoryImpl implements OwnerRepository {
                 .paramSource(parameterSource)
                 .update();
         }
+        throw new RuntimeException("Something went wrong");
     }
 
     public Collection<PetType> getPetTypes() {
