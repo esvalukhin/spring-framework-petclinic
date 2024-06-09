@@ -21,6 +21,8 @@ import org.springframework.samples.petclinic.model.Vets;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
@@ -63,6 +65,11 @@ public class VetController {
     public
     Vets showXmlVetList() {
         return getVets();
+    }
+
+    @GetMapping(value = "/vets/pets/visits")
+    public String initNewVisitForm(@RequestParam("date") String date, Map<String, Object> model) {
+        throw new IllegalArgumentException();
     }
 
     private Vets getVets() {
