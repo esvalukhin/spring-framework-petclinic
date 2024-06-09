@@ -21,6 +21,7 @@ import org.springframework.stereotype.Repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import java.util.Collection;
 
 /**
@@ -38,11 +39,14 @@ public class JpaVetRepositoryImpl implements VetRepository {
     @PersistenceContext
     private EntityManager em;
 
-
     @Override
-    @SuppressWarnings("unchecked")
     public Collection<Vet> findAll() {
-        return this.em.createQuery("SELECT distinct vet FROM Vet vet left join fetch vet.specialties ORDER BY vet.lastName, vet.firstName").getResultList();
+        TypedQuery<Vet> query = this.em.createQuery(
+            "SELECT distinct vet FROM Vet vet left join fetch vet.specialties ORDER BY vet.lastName, vet.firstName",
+            Vet.class
+        );
+        query.setHint("jakarta.persistence.query.timeout", 5000); // Timeout set to 5000 milliseconds
+        return query.getResultList();
     }
 
 }
